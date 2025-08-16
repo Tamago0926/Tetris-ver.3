@@ -236,7 +236,6 @@ function next_mino() {
 }
 
 function set_mino() {
-  // tet_tilesをリセット
   for (let y = 0; y < 23; y++) {
     for (let x = 0; x < 10; x++) {
       if (put_minos[y][x] !== 0) {
@@ -248,16 +247,12 @@ function set_mino() {
   }
 
   save_tet_mino = Array(8).fill(0);
-
-  // 現在のミノを配置
   if (next_minos.length > 0) {
     for (let i = 0; i < 4; i++) {
       let block_x =
         tet_x + mino_style[(next_minos[0] - 1) * 32 + rotate_num * 8 + i];
       let block_y =
         tet_y + mino_style[(next_minos[0] - 1) * 32 + rotate_num * 8 + 4 + i];
-
-      // 境界内であれば配置
       if (block_x >= 0 && block_x < 10 && block_y >= 0 && block_y < 23) {
         tet_tiles[block_y][block_x] = next_minos[0];
       }
@@ -284,6 +279,8 @@ function hold() {
 
       new_mino();
       set_mino();
+
+      resetDAS();
     }
   }
 }
@@ -307,6 +304,13 @@ function line_check() {
     }
   }
   set_mino();
+}
+
+function resetDAS() {
+  if (keys.ArrowLeft || keys.ArrowRight) {
+    DAS_count = 0;
+    start_count = true;
+  }
 }
 
 function move () {
@@ -383,6 +387,8 @@ function move () {
       new_mino();
       set_mino();
       line_check();
+
+      resetDAS();
     }
   }
 }
@@ -456,6 +462,8 @@ function rotate () {
     rotate_type();
     keyup[1] = 1;
     set_mino();
+
+    resetDAS();
   }
 
   if (keys.x && keyup[2] === 0) {
@@ -468,6 +476,8 @@ function rotate () {
     rotate_type();
     keyup[2] = 1;
     set_mino();
+
+    resetDAS();
   }
 }
 
