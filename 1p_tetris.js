@@ -17,7 +17,7 @@ let check = true;
 let save_tet_mino;
 let save_rotate_num;
 let rotate_save_tet_mino = [];
-let keyup = [0, 0, 0, 0]; //ハードドロップ、左回転、右回転、ホールド
+let keyup = [0, 0, 0, 0, 0]; //ハードドロップ、左回転、右回転、ホールド
 let DAS_count = 0;
 let start_count = false;
 let hold_mino = 0;
@@ -43,12 +43,13 @@ let keys = {
   z: false,
   x: false,
   c: false,
+  r: false
 };
 
 let sensitivitys = {
   ARR: 10,
   SDF: 20,
-  DAS: 8,
+  DAS: 7,
   DCD: 3,
 };
 
@@ -105,6 +106,7 @@ document.addEventListener("keyup", (e) => {
     if (e.key === "z") keyup[1] = 0;
     if (e.key === "x") keyup[2] = 0;
     if (e.key === "c") keyup[3] = 0;
+    if (e.key === "r") keyup[4] = 0;
   }
 });
 
@@ -579,6 +581,23 @@ function draw_shadow() {
   }
 }
 
+function other () {
+  if (keys.r && keyup[4] === 0) {
+    keyup[4] = 1;
+    hold_mino = 0;
+    next_minos = [];
+    new_mino();
+    tet_tiles = Array(23)
+      .fill()
+      .map(() => Array(10).fill(0));
+
+    put_minos = Array(23)
+      .fill()
+      .map(() => Array(10).fill(0));
+    set_mino();
+  }
+}
+
 new_mino();
 set_mino();
 
@@ -592,5 +611,5 @@ setInterval(() => {
   draw_1p();
   draw_line_1p();
   draw_shadow()
+  other();
 }, 16);
-
