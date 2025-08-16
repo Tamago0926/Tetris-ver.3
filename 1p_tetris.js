@@ -48,7 +48,7 @@ let keys = {
 let sensitivitys = {
   ARR: 10,
   SDF: 20,
-  DAS: 6,
+  DAS: 8,
   DCD: 3,
 };
 
@@ -593,3 +593,4 @@ setInterval(() => {
   draw_line_1p();
   draw_shadow()
 }, 16);
+
